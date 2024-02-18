@@ -1,4 +1,4 @@
-{% set version = '0.12.0' %}
+{% set version = "0.13.0" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,13 +10,13 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/nanonext_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
-  sha256: b6223e907e001e2d3e58e9c82dca80f28a69ff4155eb83b93bc08c0c1625ea13
+  sha256: 4b907b47690d1e06bb8de3572df36f5a044a3089a8deba00883d14ad5b1fd136
   patches:
     - 0001-no-static-libs-in-unix.patch
     - 0002-windows-static-lib-in-configure.patch
 
 build:
-  merge_build_host: True  # [win]
+  merge_build_host: true  # [win]
   missing_dso_whitelist:
     - '*/R.dll'  # [win]
   number: 0
@@ -61,14 +61,8 @@ about:
   home: https://shikokuchuo.net/nanonext/
   dev_url: https://github.com/shikokuchuo/nanonext/
   license: GPL-3.0-or-later
-  summary: R binding for NNG (Nanomsg Next Gen), a successor to ZeroMQ. NNG is a socket library
-    implementing 'Scalability Protocols', a reliable, high-performance standard for
-    common communications patterns including publish/subscribe, request/reply and service
-    discovery, over in-process, IPC, TCP, WebSocket and secure TLS transports. As its
-    own threaded concurrency framework, provides a toolkit for asynchronous programming
-    and distributed computing, with intuitive 'aio' objects which resolve automatically
-    upon completion of asynchronous operations, and synchronisation primitives allowing
-    R to wait upon events signalled by concurrent threads.
+  summary: R binding for NNG (Nanomsg Next Gen), a successor to ZeroMQ. NNG is a socket library implementing 'Scalability Protocols', a reliable, high-performance standard for common communications patterns including publish/subscribe, request/reply and service discovery, over in-process, IPC, TCP, WebSocket and secure TLS
+    transports. As its own threaded concurrency framework, provides a toolkit for asynchronous programming and distributed computing, with intuitive 'aio' objects which resolve automatically upon completion of asynchronous operations, and synchronisation primitives allowing R to wait upon events signalled by concurrent threads.
   license_family: GPL3
   license_file:
     - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
