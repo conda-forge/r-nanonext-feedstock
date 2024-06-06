@@ -1,4 +1,4 @@
-From 47c741368fdc0b3f486b1b064edc46914e9764d9 Mon Sep 17 00:00:00 2001
+From 65f55ba42769f3b29df60c362fc67b0b498817f0 Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Mon, 12 Feb 2024 12:51:27 +0200
 Subject: [PATCH 2/2] windows static lib in configure
@@ -33,7 +33,7 @@ index 00000000..2185676d
 +# Success
 +exit 0
 diff --git a/src/Makevars.win b/src/Makevars.win
-index 21946a49..c4942d7e 100644
+index cd43ea51..c4942d7e 100644
 --- a/src/Makevars.win
 +++ b/src/Makevars.win
 @@ -1,15 +1,4 @@
@@ -46,13 +46,13 @@ index 21946a49..c4942d7e 100644
 +PKG_CFLAGS=$(C_VISIBILITY)
 +PKG_LIBS=-L../rwinlib-1.7.2_3.5.2/lib/${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
  
--PKG_CFLAGS=-I../src-${ARC}/rwinlib-1.7.2_3.5.2/include -DNNG_STATIC_LIB $(C_VISIBILITY)
--PKG_LIBS=-L../src-${ARC}/rwinlib-1.7.2_3.5.2/lib${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
+-PKG_CFLAGS=-I../src-${ARC}/rwinlib-1.8.0p_3.5.2/include -DNNG_STATIC_LIB $(C_VISIBILITY)
+-PKG_LIBS=-L../src-${ARC}/rwinlib-1.8.0p_3.5.2/lib${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
 -
 -all: winlibs
 -
 -winlibs:
--	curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.7.2_3.5.2.zip -o nng.zip
+-	curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p_3.5.2.zip -o nng.zip
 -	unzip -q nng.zip
 -	rm -f nng.zip
 -- 
