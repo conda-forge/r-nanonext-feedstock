@@ -1,4 +1,4 @@
-{% set version = "0.13.5.2" %}
+{% set version = "1.1.0" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,7 +10,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/nanonext_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
-  sha256: 79ee73b4b2bea659d4ca2bcda2f2ae466287dbbd09aa82431a885ed5cd3b58c9
+  sha256: fbe98f998f9d28ae255b56558bfdc7dcad8726ee3cd7a1e7f05a4d91388f1dc8
   patches:
     - 0001-no-static-libs-in-unix.patch
     - 0002-windows-static-lib-in-configure.patch
@@ -28,6 +28,7 @@ requirements:
   build:
     - {{ compiler('c') }}              # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
+    - {{ stdlib('c') }}
     - {{ posix }}filesystem        # [win]
     - {{ posix }}sed               # [win]
     - {{ posix }}grep              # [win]
@@ -42,11 +43,13 @@ requirements:
     - cross-r-base {{ r_base }}    # [build_platform != target_platform]
   host:
     - r-base
+    - r-later
     - nng >=1.7.2
     - mbedtls  # [not win]
     - m2w64-libwinpthread-git  # [win]
   run:
     - r-base
+    - r-later
     - {{ pin_compatible('mbedtls', max_pin='x.x') }}  # [not win]
     - {{ pin_compatible('nng', max_pin='x.x.x') }}  # [not win]
     - {{ pin_compatible('m2w64-libwinpthread-git', max_pin='x.x.x') }}  # [win]
