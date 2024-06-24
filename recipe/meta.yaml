@@ -1,4 +1,4 @@
-{% set version = "1.1.0" %}
+{% set version = "1.1.1" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,7 +10,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/nanonext_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
-  sha256: fbe98f998f9d28ae255b56558bfdc7dcad8726ee3cd7a1e7f05a4d91388f1dc8
+  sha256: f5514c348bff395f2ea8d8dff0316f6318206019f73b9ae2dca59fd74ccce396
   patches:
     - 0001-no-static-libs-in-unix.patch
     - 0002-windows-static-lib-in-configure.patch
