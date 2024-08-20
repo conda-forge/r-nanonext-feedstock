@@ -44,7 +44,7 @@ requirements:
   host:
     - r-base
     - r-later
-    - nng >=1.7.2
+    - nng >=1.8.0
     - mbedtls  # [not win]
     - m2w64-libwinpthread-git  # [win]
   run:
