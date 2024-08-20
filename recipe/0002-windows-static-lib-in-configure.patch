@@ -1,4 +1,4 @@
-From 65f55ba42769f3b29df60c362fc67b0b498817f0 Mon Sep 17 00:00:00 2001
+From 47ff95a4eb803d2c632e67f176fc57b80aa67184 Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Mon, 12 Feb 2024 12:51:27 +0200
 Subject: [PATCH 2/2] windows static lib in configure
@@ -6,55 +6,55 @@ Subject: [PATCH 2/2] windows static lib in configure
 ---
  cleanup.win      |  3 +++
  configure.win    |  6 ++++++
- src/Makevars.win | 17 +++--------------
- 3 files changed, 12 insertions(+), 14 deletions(-)
+ src/Makevars.win | 18 +++---------------
+ 3 files changed, 12 insertions(+), 15 deletions(-)
  create mode 100644 cleanup.win
  create mode 100644 configure.win
 
 diff --git a/cleanup.win b/cleanup.win
 new file mode 100644
-index 00000000..98073083
+index 00000000..50a5565d
 --- /dev/null
 +++ b/cleanup.win
 @@ -0,0 +1,3 @@
-+rm -r rwinlib-1.7.2_3.5.2
++rm -r rwinlib-1.8.0p2_3.5.2
 +
 +exit 0
 diff --git a/configure.win b/configure.win
 new file mode 100644
-index 00000000..2185676d
+index 00000000..84987559
 --- /dev/null
 +++ b/configure.win
 @@ -0,0 +1,6 @@
-+curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.7.2_3.5.2.zip -o nng.zip
++curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p2_3.5.2.zip -o nng.zip
 +unzip -q nng.zip
 +rm -f nng.zip
 +
 +# Success
 +exit 0
 diff --git a/src/Makevars.win b/src/Makevars.win
-index cd43ea51..c4942d7e 100644
+index 7483df82..0260cd21 100644
 --- a/src/Makevars.win
 +++ b/src/Makevars.win
-@@ -1,15 +1,4 @@
+@@ -1,15 +1,3 @@
 -ifeq "$(WIN)" "64"
 -    ARC="x64"
 -else
 -    ARC="i386"
 -endif
-+PKG_CPPFLAGS=-I../rwinlib-1.7.2_3.5.2/include -DNNG_STATIC_LIB
-+PKG_CFLAGS=$(C_VISIBILITY)
-+PKG_LIBS=-L../rwinlib-1.7.2_3.5.2/lib/${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
- 
--PKG_CFLAGS=-I../src-${ARC}/rwinlib-1.8.0p_3.5.2/include -DNNG_STATIC_LIB $(C_VISIBILITY)
--PKG_LIBS=-L../src-${ARC}/rwinlib-1.8.0p_3.5.2/lib${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
+-
+-PKG_CFLAGS=-I../src-${ARC}/rwinlib-1.8.0p2_3.5.2/include -DNNG_STATIC_LIB $(C_VISIBILITY)
+-PKG_LIBS=-L../src-${ARC}/rwinlib-1.8.0p2_3.5.2/lib${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
 -
 -all: winlibs
 -
 -winlibs:
--	curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p_3.5.2.zip -o nng.zip
+-	curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p2_3.5.2.zip -o nng.zip
 -	unzip -q nng.zip
 -	rm -f nng.zip
++PKG_CPPFLAGS=-I../rwinlib-1.8.0p2_3.5.2/include -DNNG_STATIC_LIB
++PKG_CFLAGS=$(C_VISIBILITY)
++PKG_LIBS=-L../rwinlib-1.8.0p2_3.5.2/lib/${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
 -- 
 2.31.1
 
