@@ -11,7 +11,7 @@ source:
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
   sha256: 563c2775fccdbb7d29ca613f22f01dfb47e7f2eafa415df18beecf0f176e1e50
   patches:
-    - 0001-no-static-libs-in-unix.patch
+    - 0001-use-dynamic-libs-on-Windows.patch
 
 build:
   missing_dso_whitelist:
