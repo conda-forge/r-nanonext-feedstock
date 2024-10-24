@@ -25,7 +25,7 @@ requirements:
   build:
     - {{ compiler('c') }}              # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
-    # - {{ stdlib('c') }}
+    - {{ stdlib('c') }}
     - {{ posix }}filesystem        # [win]
     - {{ posix }}sed               # [win]
     - {{ posix }}grep              # [win]
@@ -39,12 +39,12 @@ requirements:
     - {{ posix }}unzip             # [win]
     - cross-r-base {{ r_base }}    # [build_platform != target_platform]
   host:
-    - r-base=4.3
+    - r-base
     - r-later
     - nng >=1.8.0
     - mbedtls
   run:
-    - r-base=4.3
+    - r-base
     - r-later
     - {{ pin_compatible('mbedtls', max_pin='x.x') }}
     - {{ pin_compatible('nng', max_pin='x.x.x') }}
