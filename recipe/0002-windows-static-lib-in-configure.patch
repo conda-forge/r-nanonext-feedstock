@@ -1,4 +1,4 @@
-From 23ea1cb36b0b7aabb4b40086bff33871d1a7d097 Mon Sep 17 00:00:00 2001
+From 120011dac0f9c07d9c7a04d2b76e35daa90dafd6 Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Mon, 12 Feb 2024 12:51:27 +0200
 Subject: [PATCH 2/2] windows static lib in configure
@@ -22,11 +22,11 @@ index 00000000..37d03ab1
 +exit 0
 diff --git a/configure.win b/configure.win
 new file mode 100644
-index 00000000..863b8d11
+index 00000000..fcd91067
 --- /dev/null
 +++ b/configure.win
 @@ -0,0 +1,6 @@
-+curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p3_3.5.2.zip -o nng.zip
++curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.9.0_3.5.2.zip -o nng.zip
 +unzip -q nng.zip
 +rm -f nng.zip
 +
