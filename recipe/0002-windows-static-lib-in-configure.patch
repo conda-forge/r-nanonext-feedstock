@@ -1,4 +1,4 @@
-From ffb2a81adf1748a5016bbcab5b08254d52ef9182 Mon Sep 17 00:00:00 2001
+From 120011dac0f9c07d9c7a04d2b76e35daa90dafd6 Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Mon, 12 Feb 2024 12:51:27 +0200
 Subject: [PATCH 2/2] windows static lib in configure
@@ -22,18 +22,18 @@ index 00000000..37d03ab1
 +exit 0
 diff --git a/configure.win b/configure.win
 new file mode 100644
-index 00000000..863b8d11
+index 00000000..fcd91067
 --- /dev/null
 +++ b/configure.win
 @@ -0,0 +1,6 @@
-+curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p3_3.5.2.zip -o nng.zip
++curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.9.0_3.5.2.zip -o nng.zip
 +unzip -q nng.zip
 +rm -f nng.zip
 +
 +# Success
 +exit 0
 diff --git a/src/Makevars.win b/src/Makevars.win
-index eedbd719..7139561d 100644
+index 40469424..bf370e10 100644
 --- a/src/Makevars.win
 +++ b/src/Makevars.win
 @@ -1,15 +1,3 @@
@@ -43,18 +43,18 @@ index eedbd719..7139561d 100644
 -    ARC="i386"
 -endif
 -
--PKG_CFLAGS=-I../src-${ARC}/rwinlib-1.8.0p3_3.5.2/include -DNNG_STATIC_LIB $(C_VISIBILITY)
--PKG_LIBS=-L../src-${ARC}/rwinlib-1.8.0p3_3.5.2/lib${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
+-PKG_CFLAGS=-I../src-${ARC}/rwinlib-1.9.0_3.5.2/include -DNNG_STATIC_LIB $(C_VISIBILITY)
+-PKG_LIBS=-L../src-${ARC}/rwinlib-1.9.0_3.5.2/lib${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
 -
 -all: winlibs
 -
 -winlibs:
--	curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.8.0p3_3.5.2.zip -o nng.zip
+-	curl -sL https://github.com/shikokuchuo/rwinlib/archive/refs/tags/v1.9.0_3.5.2.zip -o nng.zip
 -	unzip -q nng.zip
 -	rm -f nng.zip
-+PKG_CPPFLAGS=-I../rwinlib-1.8.0p3_3.5.2/include -DNNG_STATIC_LIB
++PKG_CPPFLAGS=-I../rwinlib-1.9.0_3.5.2/include -DNNG_STATIC_LIB
 +PKG_CFLAGS=$(C_VISIBILITY)
-+PKG_LIBS=-L../rwinlib-1.8.0p3_3.5.2/lib/${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
++PKG_LIBS=-L../rwinlib-1.9.0_3.5.2/lib/${R_ARCH} -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lbcrypt -lws2_32
 -- 
-2.31.1
+2.43.5
 
