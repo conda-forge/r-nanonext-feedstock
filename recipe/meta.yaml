@@ -11,7 +11,7 @@ source:
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
   sha256: 188d636bc678dc0e463784cc269cf17ab810b04de5786b9974b0fffd6c002409
   patches:
-    - 0001-no-static-libs-in-unix.patch
+    - 0001-use-dynamic-libs-on-Windows.patch
 
 build:
   missing_dso_whitelist:
@@ -43,7 +43,7 @@ requirements:
     - r-base
     - r-later
     - nng >=1.8.0
-    - mbedtls  # [not win]
+    - mbedtls
   run:
     - r-base
     - r-later
@@ -61,7 +61,6 @@ about:
   license: GPL-3.0-or-later
   summary: R binding for NNG (Nanomsg Next Gen), a successor to ZeroMQ. NNG is a socket library implementing 'Scalability Protocols', a reliable, high-performance standard for common communications patterns including publish/subscribe, request/reply and service discovery, over in-process, IPC, TCP, WebSocket and secure TLS
     transports. As its own threaded concurrency framework, provides a toolkit for asynchronous programming and distributed computing, with intuitive 'aio' objects which resolve automatically upon completion of asynchronous operations, and synchronisation primitives allowing R to wait upon events signalled by concurrent threads.
-  license_family: GPL3
   license_file:
     - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
     - NNG_LICENSE.txt  # [win]
