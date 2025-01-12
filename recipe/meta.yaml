@@ -1,6 +1,5 @@
 {% set version = "1.4.0" %}
 {% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-nanonext
@@ -12,30 +11,31 @@ source:
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
   sha256: 188d636bc678dc0e463784cc269cf17ab810b04de5786b9974b0fffd6c002409
   patches:
-    - 0001-no-static-libs-in-unix.patch
-    - 0002-windows-static-lib-in-configure.patch
+    - 0001-use-dynamic-libs-on-Windows.patch
 
 build:
-  merge_build_host: true  # [win]
   missing_dso_whitelist:
     - '*/R.dll'  # [win]
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}              # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
     - {{ stdlib('c') }}
+    - {{ stdlib('m2w64_c') }}      # [win]
     - {{ posix }}filesystem        # [win]
     - {{ posix }}sed               # [win]
     - {{ posix }}grep              # [win]
     - {{ posix }}autoconf
     - {{ posix }}automake          # [not win]
     - {{ posix }}automake-wrapper  # [win]
-    - {{ posix }}pkg-config
+    - pkg-config
+    - cmake                        # [win]
     - {{ posix }}make
     - {{ posix }}coreutils         # [win]
     - {{ posix }}zip               # [win]
@@ -45,15 +45,12 @@ requirements:
     - r-base
     - r-later
     - nng >=1.8.0
-    - mbedtls  # [not win]
-    - m2w64-libwinpthread-git  # [win]
+    - mbedtls
   run:
     - r-base
     - r-later
     - {{ pin_compatible('mbedtls', max_pin='x.x') }}  # [not win]
     - {{ pin_compatible('nng', max_pin='x.x.x') }}  # [not win]
-    - {{ pin_compatible('m2w64-libwinpthread-git', max_pin='x.x.x') }}  # [win]
-    - {{ native }}gcc-libs         # [win]
 
 test:
   commands:
@@ -66,7 +63,6 @@ about:
   license: GPL-3.0-or-later
   summary: R binding for NNG (Nanomsg Next Gen), a successor to ZeroMQ. NNG is a socket library implementing 'Scalability Protocols', a reliable, high-performance standard for common communications patterns including publish/subscribe, request/reply and service discovery, over in-process, IPC, TCP, WebSocket and secure TLS
     transports. As its own threaded concurrency framework, provides a toolkit for asynchronous programming and distributed computing, with intuitive 'aio' objects which resolve automatically upon completion of asynchronous operations, and synchronisation primitives allowing R to wait upon events signalled by concurrent threads.
-  license_family: GPL3
   license_file:
     - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
     - NNG_LICENSE.txt  # [win]
