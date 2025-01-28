@@ -1,4 +1,4 @@
-{% set version = "1.4.0" %}
+{% set version = "1.5.0" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,14 +9,14 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/nanonext_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
-  sha256: 188d636bc678dc0e463784cc269cf17ab810b04de5786b9974b0fffd6c002409
+  sha256: 574f63635915efe4d5968a94bb08cb53253c85f12c2c6a7d6727d44f4863c5bf
   patches:
     - 0001-use-dynamic-libs-on-Windows.patch
 
 build:
   missing_dso_whitelist:
     - '*/R.dll'  # [win]
-  number: 1
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
