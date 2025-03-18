@@ -1,4 +1,4 @@
-From 3c92c122cc6c94ea1a51093d0fc3751d6e829644 Mon Sep 17 00:00:00 2001
+From cd4ff776688c0cf0d8443742ffa69f565f65e29f Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Fri, 9 Feb 2024 09:25:32 +0200
 Subject: [PATCH] no static libs in unix
@@ -8,7 +8,7 @@ Subject: [PATCH] no static libs in unix
  1 file changed, 159 deletions(-)
 
 diff --git a/configure b/configure
-index 1be0e2ec..a45dccc0 100755
+index cf3425e4..f3da0292 100755
 --- a/configure
 +++ b/configure
 @@ -30,165 +30,6 @@ then
@@ -28,17 +28,17 @@ index 1be0e2ec..a45dccc0 100755
 -elif [ -d "/usr/local/include/mbedtls" ]
 -then
 -  PKG_CFLAGS="-I/usr/local/include $PKG_CFLAGS"
--  PKG_LIBS="-L/usr/local/lib $PKG_LIBS"
+-  PKG_LIBS="-L/usr/local/lib -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
 -  echo "Found 'libmbedtls' $PKG_CFLAGS"
 -elif [ -d "/usr/include/mbedtls" ]
 -then
 -  PKG_CFLAGS="-I/usr/include $PKG_CFLAGS"
--  PKG_LIBS="-L/usr/lib $PKG_LIBS"
+-  PKG_LIBS="-L/usr/lib -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
 -  echo "Found 'libmbedtls' $PKG_CFLAGS"
 -elif [ -d "/usr/local/opt/mbedtls" ]
 -then
 -  PKG_CFLAGS="-I/usr/local/opt/mbedtls/include $PKG_CFLAGS"
--  PKG_LIBS="-L/usr/local/opt/mbedtls/lib $PKG_LIBS"
+-  PKG_LIBS="-L/usr/local/opt/mbedtls/lib -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
 -  echo "Found 'libmbedtls' $PKG_CFLAGS"
 -fi
 -echo "#include <mbedtls/version.h>
@@ -83,7 +83,7 @@ index 1be0e2ec..a45dccc0 100755
 -  fi
 -  cd mbedtls-$TLS_VER
 -  echo "Compiling 'libmbedtls' from source ..."
--  cmake -DCMAKE_INSTALL_PREFIX=../install .
+-  cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_INSTALL_LIBDIR=lib .
 -  cmake --build . --target install
 -  cd ..
 -  rm -rf mbedtls-$TLS_VER
@@ -96,19 +96,19 @@ index 1be0e2ec..a45dccc0 100755
 -if [ "$INCLUDE_DIR" ] || [ "$LIB_DIR" ]
 -then
 -  NNG_CFLAGS="-I$INCLUDE_DIR"
--  NNG_LIBS="-L$LIB_DIR"
+-  NNG_LIBS="-L$LIB_DIR -lnng"
 -elif [ -d "/usr/local/include/nng" ]
 -then
 -  NNG_CFLAGS="-I/usr/local/include"
--  NNG_LIBS="-L/usr/local/lib"
+-  NNG_LIBS="-L/usr/local/lib -lnng"
 -elif [ -d "/usr/include/nng" ]
 -then
 -  NNG_CFLAGS="-I/usr/include"
--  NNG_LIBS="-L/usr/lib"
+-  NNG_LIBS="-L/usr/lib -lnng"
 -elif [ -d "/usr/local/opt/nng" ]
 -then
 -  NNG_CFLAGS="-I/usr/local/opt/nng/include"
--  NNG_LIBS="-L/usr/local/opt/nng/lib"
+-  NNG_LIBS="-L/usr/local/opt/nng/lib -lnng"
 -fi
 -
 -echo "#include <nng/nng.h>
@@ -153,7 +153,7 @@ index 1be0e2ec..a45dccc0 100755
 -  fi
 -  cd nng-$LIB_VER
 -  echo "Compiling 'libnng' from source ..."
--  cmake -DCMAKE_INSTALL_PREFIX=../install .
+-  cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_INSTALL_LIBDIR=lib .
 -  cmake --build . --target install
 -  cd ..
 -  rm -rf nng-$LIB_VER
@@ -163,15 +163,15 @@ index 1be0e2ec..a45dccc0 100755
 -  PKG_LIBS="$NNG_LIBS $PKG_LIBS"
 -fi
 -
--if [ -d "install/lib64" ]
--then
--  PKG_CFLAGS="-I../install/include $PKG_CFLAGS"
--  PKG_LIBS="-L../install/lib64 $PKG_LIBS"
--fi
 -if [ -d "install/lib" ]
 -then
 -  PKG_CFLAGS="-I../install/include $PKG_CFLAGS"
--  PKG_LIBS="-L../install/lib $PKG_LIBS"
+-  if [ -f "install/lib/libmbedtls.b" ]
+-  then
+-    PKG_LIBS="../install/lib/libnng.b ../install/lib/libmbedtls.b ../install/lib/libmbedx509.b ../install/lib/libmbedcrypto.b $PKG_LIBS"
+-  else
+-    PKG_LIBS="../install/lib/libnng.b $PKG_LIBS"
+-  fi
 -fi
 -
  # Write to Makevars
