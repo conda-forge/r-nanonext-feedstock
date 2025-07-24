@@ -1,4 +1,4 @@
-From 2a5e70da80cb3a42a3f536fa560e5ba9af98675e Mon Sep 17 00:00:00 2001
+From e07d0393963cabbe55dbd7e7b17115d6966a3d41 Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Fri, 9 Feb 2024 09:25:32 +0200
 Subject: [PATCH] no static libs in unix
@@ -8,7 +8,7 @@ Subject: [PATCH] no static libs in unix
  1 file changed, 1 insertion(+), 160 deletions(-)
 
 diff --git a/configure b/configure
-index cf3425e4..e1ecde9d 100755
+index 355692ad2..09cdc8e06 100755
 --- a/configure
 +++ b/configure
 @@ -6,7 +6,7 @@ TLS_VER="362"
@@ -20,7 +20,7 @@ index cf3425e4..e1ecde9d 100755
  NNG_CFLAGS=""
  NNG_LIBS=""
  
-@@ -30,165 +30,6 @@ then
+@@ -32,165 +32,6 @@ then
    PKG_LIBS="$PKG_LIBS -latomic"
  fi
  
@@ -31,7 +31,7 @@ index cf3425e4..e1ecde9d 100755
 -if [ "$INCLUDE_DIR" ] || [ "$LIB_DIR" ]
 -then
 -  PKG_CFLAGS="-I$INCLUDE_DIR $PKG_CFLAGS"
--  PKG_LIBS="-L$LIB_DIR $PKG_LIBS"
+-  PKG_LIBS="-L$LIB_DIR -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
 -  echo "Found INCLUDE_DIR $INCLUDE_DIR"
 -  echo "Found LIB_DIR $LIB_DIR"
 -elif [ -d "/usr/local/include/mbedtls" ]
