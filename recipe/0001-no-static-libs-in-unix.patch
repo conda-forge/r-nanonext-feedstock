@@ -1,61 +1,49 @@
-From 2a5e70da80cb3a42a3f536fa560e5ba9af98675e Mon Sep 17 00:00:00 2001
+From ec6ef1ea6398b463b99e955d713393218381d67d Mon Sep 17 00:00:00 2001
 From: brendanf <brendan.furneaux@gmail.com>
 Date: Fri, 9 Feb 2024 09:25:32 +0200
 Subject: [PATCH] no static libs in unix
 
 ---
- configure | 161 +-----------------------------------------------------
- 1 file changed, 1 insertion(+), 160 deletions(-)
+ configure | 158 +-----------------------------------------------------
+ 1 file changed, 1 insertion(+), 157 deletions(-)
 
 diff --git a/configure b/configure
-index cf3425e4..e1ecde9d 100755
+index 9033e1418..16b01130a 100755
 --- a/configure
 +++ b/configure
-@@ -6,7 +6,7 @@ TLS_VER="362"
- 
- # Initialise
- PKG_CFLAGS=""
--PKG_LIBS=""
-+PKG_LIBS="-lnng -lmbedtls -lmbedx509 -lmbedcrypto"
- NNG_CFLAGS=""
- NNG_LIBS=""
- 
-@@ -30,165 +30,6 @@ then
+@@ -34,166 +34,10 @@ then
    PKG_LIBS="$PKG_LIBS -latomic"
  fi
  
 -# Force build bundled libs
 -if [ -z "$NANONEXT_LIBS" ]; then
--
+ 
 -# Find MbedTLS and compile if necessary
 -if [ "$INCLUDE_DIR" ] || [ "$LIB_DIR" ]
 -then
--  PKG_CFLAGS="-I$INCLUDE_DIR $PKG_CFLAGS"
--  PKG_LIBS="-L$LIB_DIR $PKG_LIBS"
+-  MBEDTLS_CFLAGS="-I$INCLUDE_DIR"
+-  MBEDTLS_LIBS="-L$LIB_DIR $MBEDTLS_LIBS"
 -  echo "Found INCLUDE_DIR $INCLUDE_DIR"
 -  echo "Found LIB_DIR $LIB_DIR"
 -elif [ -d "/usr/local/include/mbedtls" ]
 -then
--  PKG_CFLAGS="-I/usr/local/include $PKG_CFLAGS"
--  PKG_LIBS="-L/usr/local/lib -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
--  echo "Found 'libmbedtls' $PKG_CFLAGS"
+-  MBEDTLS_CFLAGS="-I/usr/local/include"
+-  MBEDTLS_LIBS="-L/usr/local/lib $MBEDTLS_LIBS"
 -elif [ -d "/usr/include/mbedtls" ]
 -then
--  PKG_CFLAGS="-I/usr/include $PKG_CFLAGS"
--  PKG_LIBS="-L/usr/lib -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
--  echo "Found 'libmbedtls' $PKG_CFLAGS"
+-  MBEDTLS_CFLAGS="-I/usr/include"
+-  MBEDTLS_LIBS="-L/usr/lib $MBEDTLS_LIBS"
 -elif [ -d "/usr/local/opt/mbedtls" ]
 -then
--  PKG_CFLAGS="-I/usr/local/opt/mbedtls/include $PKG_CFLAGS"
--  PKG_LIBS="-L/usr/local/opt/mbedtls/lib -lmbedtls -lmbedx509 -lmbedcrypto $PKG_LIBS"
--  echo "Found 'libmbedtls' $PKG_CFLAGS"
+-  MBEDTLS_CFLAGS="-I/usr/local/opt/mbedtls/include"
+-  MBEDTLS_LIBS="-L/usr/local/opt/mbedtls/lib $MBEDTLS_LIBS"
 -fi
 -echo "#include <mbedtls/version.h>
 -int main() {
 -#if MBEDTLS_VERSION_MAJOR < 2 || MBEDTLS_VERSION_MAJOR == 2 && MBEDTLS_VERSION_MINOR < 5
 -    *(void *) 0 = 0;
 -#endif
--}" | ${CC} ${PKG_CFLAGS} -xc - -o /dev/null > /dev/null 2>&1
+-}" | ${CC} ${MBEDTLS_CFLAGS} -xc - -o /dev/null > /dev/null 2>&1
 -
 -else
 -  echo "NANONEXT_LIBS is set... skipping detection"
@@ -96,6 +84,10 @@ index cf3425e4..e1ecde9d 100755
 -  cmake --build . --target install
 -  cd ..
 -  rm -rf mbedtls-$TLS_VER
+-else
+-  echo "Found 'libmbedtls' $MBEDTLS_CFLAGS"
+-  PKG_CFLAGS="$MBEDTLS_CFLAGS $PKG_CFLAGS"
+   PKG_LIBS="$MBEDTLS_LIBS $PKG_LIBS"
 -fi
 -
 -# Force build bundled libs
@@ -105,19 +97,19 @@ index cf3425e4..e1ecde9d 100755
 -if [ "$INCLUDE_DIR" ] || [ "$LIB_DIR" ]
 -then
 -  NNG_CFLAGS="-I$INCLUDE_DIR"
--  NNG_LIBS="-L$LIB_DIR -lnng"
+-  NNG_LIBS="-L$LIB_DIR $NNG_LIBS"
 -elif [ -d "/usr/local/include/nng" ]
 -then
 -  NNG_CFLAGS="-I/usr/local/include"
--  NNG_LIBS="-L/usr/local/lib -lnng"
+-  NNG_LIBS="-L/usr/local/lib $NNG_LIBS"
 -elif [ -d "/usr/include/nng" ]
 -then
 -  NNG_CFLAGS="-I/usr/include"
--  NNG_LIBS="-L/usr/lib -lnng"
+-  NNG_LIBS="-L/usr/lib $NNG_LIBS"
 -elif [ -d "/usr/local/opt/nng" ]
 -then
 -  NNG_CFLAGS="-I/usr/local/opt/nng/include"
--  NNG_LIBS="-L/usr/local/opt/nng/lib -lnng"
+-  NNG_LIBS="-L/usr/local/opt/nng/lib $NNG_LIBS"
 -fi
 -
 -echo "#include <nng/nng.h>
@@ -169,7 +161,7 @@ index cf3425e4..e1ecde9d 100755
 -else
 -  echo "Found 'libnng' $NNG_CFLAGS"
 -  PKG_CFLAGS="$NNG_CFLAGS $PKG_CFLAGS"
--  PKG_LIBS="$NNG_LIBS $PKG_LIBS"
+   PKG_LIBS="$NNG_LIBS $PKG_LIBS"
 -fi
 -
 -if [ -d "install/lib" ]
@@ -183,6 +175,7 @@ index cf3425e4..e1ecde9d 100755
 -  fi
 -fi
 -
++  
  # Write to Makevars
  sed -e "s|@cflags@|$PKG_CFLAGS|" -e "s|@libs@|$PKG_LIBS|" src/Makevars.in > src/Makevars
  
