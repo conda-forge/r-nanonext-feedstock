@@ -44,7 +44,7 @@ requirements:
   host:
     - r-base
     - r-later
-    - nng >=1.8.0
+    - nng >=1.9.0
     - mbedtls
   run:
     - r-base
