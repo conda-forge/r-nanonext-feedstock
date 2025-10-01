@@ -1,4 +1,4 @@
-{% set version = "1.7.0" %}
+{% set version = "1.7.1" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,14 +9,14 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/nanonext_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
-  sha256: 2bcad216753c49b608cc3376ec2dafbf9d421d90aa609c1b0cda26c53e82aee4
+  sha256: a281cf67d2467603f0f5892a904eed31bd6d2213cf16040e322dadf5554947b2
   patches:
     - 0001-no-static-libs-in-unix.patch
 
 build:
   missing_dso_whitelist:
     - '*/R.dll'  # [win]
-  number: 1
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
