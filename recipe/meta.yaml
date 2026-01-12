@@ -16,7 +16,7 @@ source:
 build:
   missing_dso_whitelist:
     - '*/R.dll'  # [win]
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
@@ -41,6 +41,7 @@ requirements:
     - {{ posix }}zip               # [win]
     - {{ posix }}unzip             # [win]
     - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+    - r-later                      # [build_platform != target_platform]
   host:
     - r-base
     - r-later
