@@ -1,4 +1,4 @@
-{% set version = "1.8.0" %}
+{% set version = "1.8.1" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,7 +9,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/nanonext_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_{{ version }}.tar.gz
-  sha256: ff3310b0121aefc72be065eef623e6e2eaf469430c25bce0ac845b4b2ba2f286
+  sha256: 94bb49c06719d43ec3f54288b04c57100396abe04c11f57df731ddd2f5b72c0d
 
 build:
   missing_dso_whitelist:
