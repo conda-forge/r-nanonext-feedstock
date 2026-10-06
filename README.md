@@ -7,24 +7,54 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-nanonext-feed
 About r-nanonext
 ----------------
 
-Home: https://shikokuchuo.net/nanonext/
+Home: https://nanonext.r-lib.org/
 
-Package license: GPL-3.0-or-later
+Package license: MIT
 
-Summary: R binding for NNG (Nanomsg Next Gen), a successor to ZeroMQ. NNG is a socket library implementing 'Scalability Protocols', a reliable, high-performance standard for common communications patterns including publish/subscribe, request/reply and service discovery, over in-process, IPC, TCP, WebSocket and secure TLS transports. As its own threaded concurrency framework, provides a toolkit for asynchronous programming and distributed computing, with intuitive 'aio' objects which resolve automatically upon completion of asynchronous operations, and synchronisation primitives allowing R to wait upon events signalled by concurrent threads.
+Summary: Lightweight Toolkit for Messaging, Concurrency and the Web
 
-Development: https://github.com/shikokuchuo/nanonext/
+Development: https://github.com/r-lib/nanonext
+
+Documentation: https://nanonext.r-lib.org/
+
+R binding for NNG (Nanomsg Next Gen), a successor to
+ZeroMQ. A toolkit for messaging, concurrency and the web.
+High-performance socket messaging over in-process, IPC, TCP,
+WebSocket and secure TLS transports implements 'Scalability
+Protocols', a standard for common communications patterns
+including publish/subscribe, request/reply and survey. A
+threaded concurrency framework with intuitive 'aio' objects
+that resolve automatically upon completion of asynchronous
+operations, and synchronisation primitives that allow R to wait
+on events signalled by concurrent threads. A unified HTTP
+server hosting REST endpoints, WebSocket connections and
+streaming on a single port, with a built-in HTTP client.
 
 About r-nanonext
 ----------------
 
-Home: https://shikokuchuo.net/nanonext/
+Home: https://nanonext.r-lib.org/
 
-Package license: GPL-3.0-or-later
+Package license: MIT
 
-Summary: R binding for NNG (Nanomsg Next Gen), a successor to ZeroMQ. NNG is a socket library implementing 'Scalability Protocols', a reliable, high-performance standard for common communications patterns including publish/subscribe, request/reply and service discovery, over in-process, IPC, TCP, WebSocket and secure TLS transports. As its own threaded concurrency framework, provides a toolkit for asynchronous programming and distributed computing, with intuitive 'aio' objects which resolve automatically upon completion of asynchronous operations, and synchronisation primitives allowing R to wait upon events signalled by concurrent threads.
+Summary: Lightweight Toolkit for Messaging, Concurrency and the Web
 
-Development: https://github.com/shikokuchuo/nanonext/
+Development: https://github.com/r-lib/nanonext
+
+Documentation: https://nanonext.r-lib.org/
+
+R binding for NNG (Nanomsg Next Gen), a successor to
+ZeroMQ. A toolkit for messaging, concurrency and the web.
+High-performance socket messaging over in-process, IPC, TCP,
+WebSocket and secure TLS transports implements 'Scalability
+Protocols', a standard for common communications patterns
+including publish/subscribe, request/reply and survey. A
+threaded concurrency framework with intuitive 'aio' objects
+that resolve automatically upon completion of asynchronous
+operations, and synchronisation primitives that allow R to wait
+on events signalled by concurrent threads. A unified HTTP
+server hosting REST endpoints, WebSocket connections and
+streaming on a single port, with a built-in HTTP client.
 
 Current build status
 ====================
@@ -51,20 +81,6 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_ppc64le_r_base4.4</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21607&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/r-nanonext-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_r_base4.4" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_r_base4.5</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21607&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/r-nanonext-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_r_base4.5" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_r_base4.4</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21607&branchName=main">
