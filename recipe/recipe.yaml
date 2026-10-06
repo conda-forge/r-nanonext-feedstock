@@ -12,6 +12,8 @@ source:
     - ${{ cran_mirror }}/src/contrib/nanonext_${{ version }}.tar.gz
     - ${{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_${{ version }}.tar.gz
   sha256: f025e956a290798b072ea21de68ce315f3e3d993ea95ff3a6f14e301bcffb4c5
+  patches:
+    - link-against-pthread-on-Windows.patch
 
 build:
   number: 1

@@ -1,0 +1,20 @@
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Subject: [PATCH] Link against pthread on Windows
+
+The bundled Mbed TLS is configured with MBEDTLS_THREADING_PTHREAD, so
+mbedtls/library/threading.c needs the pthread_mutex_* symbols from
+winpthreads. Upstream does not list it in PKG_LIBS, as the CRAN Rtools
+builds link without it, but the conda-forge MinGW-w64 toolchain needs it
+requested explicitly.
+---
+--- a/src/Makevars.ucrt
++++ b/src/Makevars.ucrt
+@@ -7,7 +7,7 @@
+ # PKG_CFLAGS carries $(C_VISIBILITY) to hide the bundled nng_*/mbedtls_* symbols.
+ PKG_CPPFLAGS = -Inng/include -Imbedtls/include -DNNG_STATIC_LIB
+ PKG_CFLAGS = $(C_VISIBILITY)
+-PKG_LIBS = -lws2_32 -lmswsock -ladvapi32 -lbcrypt -liphlpapi
++PKG_LIBS = -lws2_32 -lmswsock -ladvapi32 -lbcrypt -liphlpapi -lpthread
+ 
+ MBED = mbedtls/library
+ NNG = nng/src
