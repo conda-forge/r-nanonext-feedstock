@@ -3,36 +3,6 @@ About r-nanonext-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-nanonext-feedstock/blob/main/LICENSE.txt)
 
-
-About r-nanonext
-----------------
-
-Home: https://nanonext.r-lib.org/
-
-Package license: MIT
-
-Summary: Lightweight Toolkit for Messaging, Concurrency and the Web
-
-Development: https://github.com/r-lib/nanonext
-
-Documentation: https://nanonext.r-lib.org/
-
-R binding for NNG (Nanomsg Next Gen), a successor to
-ZeroMQ. A toolkit for messaging, concurrency and the web.
-High-performance socket messaging over in-process, IPC, TCP,
-WebSocket and secure TLS transports implements 'Scalability
-Protocols', a standard for common communications patterns
-including publish/subscribe, request/reply and survey. A
-threaded concurrency framework with intuitive 'aio' objects
-that resolve automatically upon completion of asynchronous
-operations, and synchronisation primitives that allow R to wait
-on events signalled by concurrent threads. A unified HTTP
-server hosting REST endpoints, WebSocket connections and
-streaming on a single port, with a built-in HTTP client.
-
-About r-nanonext
-----------------
-
 Home: https://nanonext.r-lib.org/
 
 Package license: MIT
