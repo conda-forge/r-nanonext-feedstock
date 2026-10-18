@@ -1,0 +1,25 @@
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Subject: [PATCH] Link against the conda-forge nng and Mbed TLS on Windows
+
+Upstream's src/Makevars.ucrt always compiles the bundled NNG and Mbed TLS
+sources into nanonext.dll. conda-forge prefers its shared nng and mbedtls
+packages over bundled copies, so compile only the package's own sources and
+link against the import libraries in %LIBRARY_PREFIX% (R_HOME is
+%PREFIX%/Lib/R). NNG_STATIC_LIB is dropped so that nng.h declares the
+functions as dllimport.
+---
+--- a/src/Makevars.ucrt
++++ b/src/Makevars.ucrt
+@@ -7,5 +7,5 @@
+ # PKG_CFLAGS carries $(C_VISIBILITY) to hide the bundled nng_*/mbedtls_* symbols.
+-PKG_CPPFLAGS = -Inng/include -Imbedtls/include -DNNG_STATIC_LIB
++PKG_CPPFLAGS = -I$(R_HOME)/../../Library/include
+ PKG_CFLAGS = $(C_VISIBILITY)
+-PKG_LIBS = -lws2_32 -lmswsock -ladvapi32 -lbcrypt -liphlpapi
++PKG_LIBS = -L$(R_HOME)/../../Library/lib -lnng -lmbedtls -lmbedx509 -lmbedcrypto -lws2_32 -lmswsock -ladvapi32 -lbcrypt -liphlpapi
+ 
+@@ -21,3 +21,3 @@
+ 
+-OBJECTS = $(P_OBJECTS) $(NNG_OBJECTS) $(MBEDTLS_OBJECTS)
++OBJECTS = $(P_OBJECTS)
+ 

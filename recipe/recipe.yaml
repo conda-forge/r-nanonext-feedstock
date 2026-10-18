@@ -13,14 +13,17 @@ source:
     - ${{ cran_mirror }}/src/contrib/Archive/nanonext/nanonext_${{ version }}.tar.gz
   sha256: f025e956a290798b072ea21de68ce315f3e3d993ea95ff3a6f14e301bcffb4c5
   patches:
-    - link-against-pthread-on-Windows.patch
+    - skip-runtime-tls-probe-when-cross-compiling.patch
+    - link-against-conda-forge-nng-and-mbedtls-on-Windows.patch
 
 build:
   number: 1
   script:
     - if: win
       then: R CMD INSTALL --build . %R_ARGS%
-      else: R CMD INSTALL --build . ${R_ARGS}
+      # INCLUDE_DIR and LIB_DIR point configure at the conda-forge nng and
+      # mbedtls, as otherwise it compiles the bundled sources
+      else: INCLUDE_DIR="${PREFIX}/include" LIB_DIR="${PREFIX}/lib" R CMD INSTALL --build . ${R_ARGS}
   dynamic_linking:
     rpaths:
       - lib/R/lib/
@@ -53,8 +56,15 @@ requirements:
         - m2-zip
   host:
     - r-base
+    # configure compiles the bundled sources for nng < 1.12.3 or a mbedtls
+    # other than 3.x
+    - nng >=1.12.3
+    - mbedtls 3.*
   run:
     - r-base
+    # src/nng_structs.h mirrors internal nng structs, so the layout can change
+    # with any nng release
+    - ${{ pin_compatible('nng', upper_bound='x.x.x') }}
 
 tests:
   - r:
@@ -81,10 +91,6 @@ about:
   license_file:
     - ${{ PREFIX }}/lib/R/share/licenses/MIT
     - LICENSE
-    - if: win
-      then:
-        - NNG_LICENSE.txt
-        - MBEDTLS_LICENSE.txt
   repository: https://github.com/r-lib/nanonext
   documentation: https://nanonext.r-lib.org
 

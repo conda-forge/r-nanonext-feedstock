@@ -1,0 +1,25 @@
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Subject: [PATCH] Skip the runtime TLS probe of libnng when cross-compiling
+
+configure runs a small program to check that the system libnng has working
+TLS, and silently compiles the bundled NNG if the program fails. A program
+built for the target platform cannot run when cross-compiling, which would
+select the bundled NNG instead of the conda-forge nng, so trust the system
+libnng when the build_platform and target_platform set by rattler-build
+differ. The conda-forge nng is always built with Mbed TLS support.
+---
+--- a/configure
++++ b/configure
+@@ -236,7 +236,11 @@
+     # A system libnng can pass the version and link checks yet have no TLS at
+     # runtime: nng_tls_config_alloc() always exists, as an ENOTSUP stub if need
+     # be. Probe by running it -- any failure selects the bundled build.
+-    if echo "#include <nng/nng.h>
++    # The probe cannot run when cross-compiling, so then trust the system libnng.
++    if [ -n "$build_platform" ] && [ "$build_platform" != "$target_platform" ]; then
++      echo "Cross-compiling... skipping the runtime TLS probe"
++      echo "Found 'libnng' $NNG_SYS_CFLAGS"
++    elif echo "#include <nng/nng.h>
+ #include <nng/supplemental/tls/tls.h>
+ int main(void) {
+     nng_tls_config *cfg;
